@@ -2,7 +2,8 @@
 
 import * as React from "react"
 import {ChevronDown, Plus} from "lucide-react"
-import { DynamicIcon, IconName } from 'lucide-react/dynamic';
+import {DynamicIcon, IconName} from 'lucide-react/dynamic';
+import {z} from "zod"
 
 import {
     DropdownMenu,
@@ -14,16 +15,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem,} from "@/components/ui/sidebar"
+import {projectSchema} from "@/schema/projects";
 
-export function ProjectSwitcher({
-                                    projects,
-                                }: {
-    projects: {
-        name: string
-        logo: IconName
-        plan: string
-    }[]
-}) {
+type Props = {
+    projects: z.infer<typeof projectSchema>[]
+}
+
+export function ProjectSwitcher({projects}: Props
+) {
     const [activeTeam, setActiveTeam] = React.useState(projects[0])
 
     if (!activeTeam) {
@@ -38,7 +37,7 @@ export function ProjectSwitcher({
                         <SidebarMenuButton className="w-fit px-1.5">
                             <div
                                 className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-5 items-center justify-center rounded-md">
-                                <DynamicIcon name={activeTeam.logo} className="size-3"/>
+                                <DynamicIcon name={activeTeam.logo as IconName} className="size-3"/>
                             </div>
                             <span className="truncate font-medium">{activeTeam.name}</span>
                             <ChevronDown className="opacity-50"/>
@@ -63,7 +62,7 @@ export function ProjectSwitcher({
                                     <div className="flex size-6 items-center justify-center rounded-xs border">
                                         {/*<project.logo className="size-4 shrink-0"/>*/}
                                         <DynamicIcon
-                                            name={project.logo}
+                                            name={project.logo as IconName}
                                             className="size-4 shrink-0"
                                         />
                                     </div>

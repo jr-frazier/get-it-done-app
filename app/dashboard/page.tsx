@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/sidebar"
 import {getProjects} from "@/server/actions/project";
 import {getTasks} from "@/server/actions/tasks";
+import Image from "next/image";
+import TaskForm from "@/components/forms/TaskForm";
+
 
 export default async function Page() {
     const projects = await getProjects()
@@ -34,7 +37,13 @@ export default async function Page() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1">
-                   Get It Done!
+                      <Image
+                        src="/logo-dark-watermark.svg"
+                        alt="logo"
+                        width={150}
+                        height={150}
+                        className="rounded-full"
+                      />
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -45,7 +54,7 @@ export default async function Page() {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 px-4 py-10">
-
+            <TaskForm/>
         </div>
       </SidebarInset>
     </SidebarProvider>

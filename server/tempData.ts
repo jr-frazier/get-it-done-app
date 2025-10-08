@@ -1,135 +1,225 @@
 // This is sample data.
 import {AudioWaveform, Command,} from "lucide-react"
 import {IconName} from "lucide-react/dynamic";
+import {z} from "zod";
+import {projectSchema} from "@/schema/projects";
+import {taskSchema} from "@/schema/task";
 
 type Project = {
     name: string
     logo:  IconName
-    plan: string
 }
 
-export const projectData: Project[] = [
+export const projectData: z.infer<typeof projectSchema>[] = [
     {
+        id: 1,
         name: "Acme Inc",
+        description: "New Project 1",
         logo: "command",
-        plan: "Enterprise",
     },
     {
+        id: 2,
         name: "Acme Corp.",
+        description: "New Project 2",
         logo: "audio-waveform",
-        plan: "Startup",
     },
     {
+        id: 3,
         name: "Evil Corp.",
+        description: "New Project 3",
         logo: "command",
-        plan: "Free",
     },
 ]
 
 
-export const tasksData = [
+export const tasksData: z.infer<typeof taskSchema>[] = [
     {
+        id: 1,
         name: "Personal Life Management",
         emoji: "🏠",
+        description: "Manage your daily routine, health, and well-being.",
+        completed: false,
+        createdDate: "2024-01-01",
+        updatedDate: "2024-01-01",
         subtasks: [
             {
+                id: 1,
                 name: "Daily Journal & Reflection",
-                url: "#",
                 emoji: "📔",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 2,
                 name: "Health & Wellness Tracker",
-                url: "#",
                 emoji: "🍏",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 3,
                 name: "Personal Growth & Learning Goals",
-                url: "#",
                 emoji: "🌟",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
         ],
     },
     {
+        id: 2,
         name: "Professional Development",
         emoji: "💼",
+        description: "Manage your daily routine, health, and well-being.",
+        completed: false,
+        createdDate: "2024-01-01",
+        updatedDate: "2024-01-01",
         subtasks: [
             {
+                id: 1,
                 name: "Career Objectives & Milestones",
-                url: "#",
                 emoji: "🎯",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 2,
                 name: "Skill Acquisition & Training Log",
-                url: "#",
                 emoji: "🧠",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 3,
                 name: "Networking Contacts & Events",
-                url: "#",
                 emoji: "🤝",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
         ],
     },
     {
+        id: 3,
         name: "Creative Projects",
         emoji: "🎨",
+        description: "Manage your daily routine, health, and well-being.",
+        completed: false,
+        createdDate: "2024-01-01",
+        updatedDate: "2024-01-01",
         subtasks: [
             {
+                id: 1,
                 name: "Writing Ideas & Story Outlines",
-                url: "#",
                 emoji: "✍️",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 2,
                 name: "Art & Design Portfolio",
-                url: "#",
                 emoji: "🖼️",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 3,
                 name: "Music Composition & Practice Log",
-                url: "#",
                 emoji: "🎵",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
         ],
     },
     {
+        id: 4,
         name: "Home Management",
         emoji: "🏡",
+        description: "Manage your daily routine, health, and well-being.",
+        completed: false,
+        createdDate: "2024-01-01",
+        updatedDate: "2024-01-01",
         subtasks: [
             {
+                id: 1,
                 name: "Household Budget & Expense Tracking",
-                url: "#",
                 emoji: "💰",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 2,
                 name: "Home Maintenance Schedule & Tasks",
-                url: "#",
                 emoji: "🔧",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 3,
                 name: "Family Calendar & Event Planning",
-                url: "#",
                 emoji: "📅",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
         ],
     },
     {
+        id: 5,
         name: "Travel & Adventure",
         emoji: "🧳",
+        description: "Manage your daily routine, health, and well-being.",
+        completed: false,
+        createdDate: "2024-01-01",
+        updatedDate: "2024-01-01",
         subtasks: [
             {
+                id: 1,
                 name: "Trip Planning & Itineraries",
-                url: "#",
                 emoji: "🗺️",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 2,
                 name: "Travel Bucket List & Inspiration",
-                url: "#",
                 emoji: "🌎",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
             {
+                id: 3,
                 name: "Travel Journal & Photo Gallery",
-                url: "#",
                 emoji: "📸",
+                description: "Manage your daily routine, health, and well-being.",
+                completed: false,
+                createdDate: "2024-01-01",
+                updatedDate: "2024-01-01",
             },
         ],
     },

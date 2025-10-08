@@ -17,18 +17,14 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import * as z from "zod";
+
+import {taskSchema} from "@/schema/task";
 
 export function NavTasks({
   tasks,
 }: {
-  tasks: {
-    name: string
-    emoji: React.ReactNode
-    subtasks: {
-      name: string
-      emoji: React.ReactNode
-    }[]
-  }[]
+  tasks: z.infer<typeof taskSchema>[]
 }) {
   return (
     <SidebarGroup>
