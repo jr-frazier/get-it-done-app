@@ -15,19 +15,19 @@ export const projectData: z.infer<typeof projectSchema>[] = [
         id: 1,
         name: "Acme Inc",
         description: "New Project 1",
-        logo: "command",
+        emoji: "🏠",
     },
     {
         id: 2,
         name: "Acme Corp.",
         description: "New Project 2",
-        logo: "audio-waveform",
+        emoji: "🏠",
     },
     {
         id: 3,
         name: "Evil Corp.",
         description: "New Project 3",
-        logo: "command",
+        emoji: "🏠",
     },
 ]
 

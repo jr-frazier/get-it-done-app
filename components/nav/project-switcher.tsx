@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import {ChevronDown, Plus} from "lucide-react"
-import {DynamicIcon, IconName} from 'lucide-react/dynamic';
 import {z} from "zod"
 
 import {
@@ -15,19 +14,55 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem,} from "@/components/ui/sidebar"
-import {projectSchema} from "@/schema/projects";
+import {projectResponseSchema} from "@/schema/projects";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Props = {
-    projects: z.infer<typeof projectSchema>[]
+    projects: z.infer<typeof projectResponseSchema>[]
+    selectedProject?: z.infer<typeof projectResponseSchema>
 }
 
-export function ProjectSwitcher({projects}: Props
+export function ProjectSwitcher({projects, selectedProject}: Props
 ) {
-    const [activeTeam, setActiveTeam] = React.useState(projects[0])
-
-    if (!activeTeam) {
-        return null
+    const [activeProject, setactiveProject] = React.useState<z.infer<typeof projectResponseSchema>>()
+    const router = useRouter();
+    const defaultMenuItem: z.infer<typeof projectResponseSchema> = {
+        name: "Select a project",
+        emoji: "⬇️",
+        id: "0",
+        description: "",
+        clerkUserId: "",
+        updatedAt: new Date(),
+        createdAt: new Date()
     }
+
+
+    React.useEffect(() => {
+        if (selectedProject) {
+            setactiveProject(selectedProject)
+        } else {
+            setactiveProject(defaultMenuItem)
+        }
+
+    }, [selectedProject])
+
+    if (projects.length === 0 || !activeProject) {
+        return (
+            <Button variant="outline" className="w-fit px-1.5" asChild>
+                <Link href={"/add-project"} className="text-muted-foreground font-medium">
+                    <Plus className="size-4"/>Add Project
+                </Link>
+            </Button>
+        )
+    }
+
+    const handleProjectChange = (project: z.infer<typeof projectResponseSchema>) => {
+        setactiveProject(project)
+        router.push(`/project/${project.id}`)
+    }
+
 
     return (
         <SidebarMenu>
@@ -37,9 +72,9 @@ export function ProjectSwitcher({projects}: Props
                         <SidebarMenuButton className="w-fit px-1.5">
                             <div
                                 className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-5 items-center justify-center rounded-md">
-                                <DynamicIcon name={activeTeam.logo as IconName} className="size-3"/>
+                                <span>{activeProject.emoji}</span>
                             </div>
-                            <span className="truncate font-medium">{activeTeam.name}</span>
+                            <span className="truncate font-medium">{activeProject.name}</span>
                             <ChevronDown className="opacity-50"/>
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
@@ -56,15 +91,11 @@ export function ProjectSwitcher({projects}: Props
 
                             return (<DropdownMenuItem
                                     key={project.name}
-                                    onClick={() => setActiveTeam(project)}
+                                    onClick={() => handleProjectChange(project)}
                                     className="gap-2 p-2"
                                 >
                                     <div className="flex size-6 items-center justify-center rounded-xs border">
-                                        {/*<project.logo className="size-4 shrink-0"/>*/}
-                                        <DynamicIcon
-                                            name={project.logo as IconName}
-                                            className="size-4 shrink-0"
-                                        />
+                                        <span>{project.emoji}</span>
                                     </div>
                                     {project.name}
                                     <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
@@ -73,10 +104,13 @@ export function ProjectSwitcher({projects}: Props
                         })}
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem className="gap-2 p-2">
-                            <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                                <Plus className="size-4"/>
-                            </div>
-                            <div className="text-muted-foreground font-medium">Add Project</div>
+                            <Link href={"/add-project"} className="flex w-full items-center gap-2">
+                                <div
+                                    className="bg-background flex size-6 items-center justify-center rounded-md border">
+                                    <Plus className="size-4"/>
+                                </div>
+                                <div className="text-muted-foreground font-medium">Add Project</div>
+                            </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
