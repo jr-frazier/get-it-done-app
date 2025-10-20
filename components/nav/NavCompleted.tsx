@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import {taskSchema} from "@/schema/task";
 import * as z from "zod";
+import Link from "next/link";
 
 export function NavCompleted({
                              tasks,
@@ -31,13 +32,13 @@ export function NavCompleted({
             <SidebarGroupContent>
                 <SidebarMenu>
                     {tasks.map((task) => (
-                        <Collapsible key={task.name}>
+                        <Collapsible key={task.id}>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <Link href={`/project/${task.projectId}/${task.id}`}>
                                         <span>{task.emoji}</span>
                                         <span>{task.name}</span>
-                                    </a>
+                                    </Link>
                                 </SidebarMenuButton>
                                 <CollapsibleTrigger asChild>
                                     <SidebarMenuAction

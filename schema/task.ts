@@ -13,9 +13,10 @@ export const taskSchema = baseTaskSchema.extend({
     createdAt: z.date(),
     updatedAt: z.date(),
     subtasks: z.array(subtaskSchema),
+    projectId: z.string(),
 })
 
-export const addTaskResponse = baseTaskSchema.extend({
+export const taskResponse = baseTaskSchema.extend({
     id: z.string(),
     completed: z.boolean(),
     createdAt: z.date(),
@@ -23,4 +24,8 @@ export const addTaskResponse = baseTaskSchema.extend({
     projectId: z.string(),
 })
 
-export const taskFormSchema = baseTaskSchema.extend({})
+
+export const taskFormSchema = baseTaskSchema.extend({
+    completed: z.boolean().optional(),
+})
+

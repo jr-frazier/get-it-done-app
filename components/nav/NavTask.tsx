@@ -20,8 +20,9 @@ import {
 import * as z from "zod";
 
 import {taskSchema} from "@/schema/task";
+import Link from "next/link";
 
-export function NavTasks({
+export function NavTask({
   tasks,
 }: {
   tasks: z.infer<typeof taskSchema>[]
@@ -32,13 +33,13 @@ export function NavTasks({
       <SidebarGroupContent>
         <SidebarMenu>
           {tasks.map((task) => (
-            <Collapsible key={task.name}>
+            <Collapsible key={task.id}>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="#">
+                  <Link href={`/project/${task.projectId}/${task.id}`}>
                     <span>{task.emoji}</span>
                     <span>{task.name}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuAction
@@ -49,7 +50,9 @@ export function NavTasks({
                   </SidebarMenuAction>
                 </CollapsibleTrigger>
                 <SidebarMenuAction showOnHover>
-                  <Plus />
+                    <Link href={`/project/${task.projectId}/${task.id}/add-subtask`}>
+                        <Plus />
+                    </Link>
                 </SidebarMenuAction>
                 <CollapsibleContent>
                   <SidebarMenuSub>

@@ -22,12 +22,7 @@ const data = [
 ]
 
 export function NavActions() {
-    const [isOpen, setIsOpen] = React.useState(false)
     const currentDate = format(new Date(), "MMM dd yyyy");
-
-    React.useEffect(() => {
-        setIsOpen(true)
-    }, [])
 
 
     return (
@@ -38,44 +33,6 @@ export function NavActions() {
                <SignedIn>
                    <UserButton />
                </SignedIn>
-
-
-            {/*<Popover open={isOpen} onOpenChange={setIsOpen}>*/}
-            {/*    <PopoverTrigger asChild>*/}
-            {/*        <Button*/}
-            {/*            variant="ghost"*/}
-            {/*            size="icon"*/}
-            {/*            className="data-[state=open]:bg-accent h-7 w-7"*/}
-            {/*        >*/}
-            {/*            <MoreHorizontal/>*/}
-            {/*        </Button>*/}
-            {/*    </PopoverTrigger>*/}
-            {/*    /!*<PopoverContent*!/*/}
-            {/*    /!*    className="w-56 overflow-hidden rounded-lg p-0"*!/*/}
-            {/*    /!*    align="end"*!/*/}
-            {/*    /!*>*!/*/}
-            {/*    /!*    /!*<Sidebar collapsible="none" className="bg-transparent">*!/*!/*/}
-            {/*    /!*    /!*    /!*<SidebarContent>*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*{data.map((group, index) => (*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*    <SidebarGroup key={index} className="border-b last:border-none">*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*        <SidebarGroupContent className="gap-0">*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*            <SidebarMenu>*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*{group.map((item, index) => (*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*    <SidebarMenuItem key={index}>*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*        <SidebarMenuButton>*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*            <item.icon/>*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*            <span>{item.label}</span>*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*        </SidebarMenuButton>*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*    </SidebarMenuItem>*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*                /!*))}*!/*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*            </SidebarMenu>*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*        </SidebarGroupContent>*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*    </SidebarGroup>*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*    /!*))}*!/*!/*!/*!/*/}
-            {/*    /!*    /!*    /!*</SidebarContent>*!/*!/*!/*/}
-            {/*    /!*    /!*</Sidebar>*!/*!/*/}
-            {/*    /!*</PopoverContent>*!/*/}
-            {/*</Popover>*/}
         </div>
     )
 }

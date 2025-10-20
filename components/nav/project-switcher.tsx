@@ -104,7 +104,7 @@ export function ProjectSwitcher({projects, selectedProject}: Props
                         })}
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem className="gap-2 p-2">
-                            <Link href={"/add-project"} className="flex w-full items-center gap-2">
+                            <Link href={"/dashboard/add-project"} className="flex w-full items-center gap-2">
                                 <div
                                     className="bg-background flex size-6 items-center justify-center rounded-md border">
                                     <Plus className="size-4"/>

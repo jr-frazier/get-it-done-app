@@ -1,14 +1,17 @@
 import {z} from 'zod'
+const baseSubtaskSchema = z.object({
+    name: z.string(),
+    description: z.string(),
+    emoji: z.string(),
+})
 
-
-export const subtaskSchema = z.object({
+export const subtaskSchema = baseSubtaskSchema.extend({
         id: z.string(),
-        name: z.string(),
         taskId: z.string(),
-        description: z.string(),
         completed: z.boolean(),
-        emoji: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
     }
 )
+
+export const subtaskFormSchema = baseSubtaskSchema.extend({})

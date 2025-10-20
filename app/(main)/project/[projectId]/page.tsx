@@ -10,7 +10,7 @@ export default async function Page({params}: { params: { projectId: string }}) {
     return (
         <div className="flex flex-col gap-5">
             {
-                tasks.map((task) => (<TaskCard key={task.id} task={task}/>))
+                tasks.map((task) => (<TaskCard key={task.id} task={task} projectId={projectId}/>))
             }
         </div>
     )
