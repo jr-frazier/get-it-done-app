@@ -35,19 +35,20 @@ export default function SubtaskCard({subTask, projectId, taskCompleted }: TaskCa
         <Card>
             <CardHeader>
                 <CardTitle>
-                    <Link href={`/project/${projectId}/${subTask.id}`} className={`flex items-center gap-2`}>
-                        {subTask.emoji} {subTask.name}
-                    </Link>
+                    {subTask.emoji} {subTask.name}
                 </CardTitle>
             </CardHeader>
             <CardContent>
                 <p>{subTask.description}</p>
             </CardContent>
             <CardFooter>
-                <CardAction>
+                <CardAction className="flex gap-5">
                     {
                         subTask.completed ? <Button disabled={taskCompleted} variant="warningOutline" onClick={handleMarkIncomplete}>Mark Incomplete</Button> : <Button variant="successOutline" onClick={handleMarkComplete}>Mark Complete</Button>
                     }
+                    <Button disabled={taskCompleted} variant="outline">
+                        <Link href={`/project/${projectId}/${subTask.taskId}/${subTask.id}`}>Edit</Link>
+                    </Button>
                     {subTask.completed && <CompletedIndicator/>}
                 </CardAction>
             </CardFooter>

@@ -28,9 +28,12 @@ export default function TaskView({task}: Props)  {
     }
 
     return (
-        <div className="flex flex-col gap-5 justify-start">
-            <h1 className="text-4xl">{task.emoji} {task.name}</h1>
-            <p>{task.description}</p>
+        <div className="flex flex-col gap-24 justify-start">
+            <div className="flex flex-col gap-5">
+                <h1 className="text-4xl">{task.emoji} {task.name}</h1>
+                <p>{task.description}</p>
+            </div>
+
             <TaskButtonGroup handleMarkComplete={handleMarkComplete} handleMarkIncomplete={handleMarkIncomplete}   completed={task.completed}/>
         </div>
     )

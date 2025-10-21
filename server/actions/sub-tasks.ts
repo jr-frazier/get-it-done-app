@@ -12,12 +12,15 @@ import {taskFormSchema, taskResponse} from "@/schema/task";
 
 
 export const getSubTasks = async (taskId: string): Promise<z.infer<typeof subtaskSchema>[]> => {
+    
     try {
+
         // Step 1: Fetch all tasks for the given project
         const subTasks = await db
             .select()
             .from(subTaskTable)
-            .where(eq(subTaskTable.taskId, taskId));
+            .where(eq(subTaskTable.taskId, taskId))
+            .orderBy(subTaskTable.name);
 
         return subTasks;
     } catch (error) {
@@ -36,17 +39,20 @@ export const getSubTask = async (subTaskId: string): Promise<z.infer<typeof subt
     }
 }
 
-export const updateSubtask = async (taskId: string, data: z.infer<typeof subtaskFormSchema>): Promise<ApiResponse<z.infer<typeof taskFormSchema>>> => {
+export const updateSubtask = async (taskId: string, projectId: string, subtaskId: string, data: z.infer<typeof subtaskFormSchema>): Promise<ApiResponse<z.infer<typeof taskFormSchema>>> => {
     try {
         const {success, error} = subtaskFormSchema.safeParse(data);
         if (!success) {
             return {success: false, error: "Invalid data"}
         }
-        const [updatedTask] = await db.update(subTaskTable).set(data).where(eq(subTaskTable.id, taskId)).returning();
+        const [updatedTask] = await db.update(subTaskTable).set(data).where(eq(subTaskTable.id, subtaskId)).returning();
         return {success: true, data: updatedTask}
     } catch (error) {
         console.error("Error updating task:", error);
         return {success: false, error: "Failed to update task"}
+    } finally {
+        revalidatePath(`project/${projectId}/${taskId}`)
+        redirect(`/project/${projectId}/${taskId}`)
     }
 }
 

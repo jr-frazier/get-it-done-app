@@ -26,6 +26,9 @@ export function NavCompleted({
                          }: {
     tasks: z.infer<typeof taskSchema>[]
 }) {
+    if (tasks.length === 0) {
+        return <></>
+    }
     return (
         <SidebarGroup>
             <SidebarGroupLabel>🎉 Completed Tasks</SidebarGroupLabel>
@@ -48,9 +51,6 @@ export function NavCompleted({
                                         <ChevronRight />
                                     </SidebarMenuAction>
                                 </CollapsibleTrigger>
-                                <SidebarMenuAction showOnHover>
-                                    <Plus />
-                                </SidebarMenuAction>
                                 <CollapsibleContent>
                                     <SidebarMenuSub>
                                         {task.subtasks.map((subtask) => (

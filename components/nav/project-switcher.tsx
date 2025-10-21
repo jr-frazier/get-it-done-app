@@ -51,7 +51,7 @@ export function ProjectSwitcher({projects, selectedProject}: Props
     if (projects.length === 0 || !activeProject) {
         return (
             <Button variant="outline" className="w-fit px-1.5" asChild>
-                <Link href={"/add-project"} className="text-muted-foreground font-medium">
+                <Link href={"dashboard/add-project"} className="text-muted-foreground font-medium">
                     <Plus className="size-4"/>Add Project
                 </Link>
             </Button>

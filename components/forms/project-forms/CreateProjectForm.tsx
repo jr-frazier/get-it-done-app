@@ -7,6 +7,8 @@ import React from "react"
 import {projectFormSchema} from "@/components/forms/project-forms/projectFormSchema";
 import BaseTaskForm from "@/components/forms/task-forms/BaseTaskForm";
 import {createProject} from "@/server/actions/project";
+import {redirect} from "next/navigation";
+import {isErrorResponse} from "@/server/types";
 
 type ProjectFormProps = z.infer<typeof projectFormSchema>
 
@@ -23,11 +25,14 @@ export default function CreateProjectForm() {
     async function onSubmit(values: ProjectFormProps) {
         const data = await createProject(values)
 
-        if (data?.error) {
+        if (isErrorResponse(data)) {
             form.setError("root", {
                 message: `${data.error}`
             })
+        } else {
+            redirect(`/project/${data.id}`)
         }
+
     }
 
     return (

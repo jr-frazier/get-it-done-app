@@ -36,6 +36,9 @@ export default function CreateSubtaskForm() {
     }
 
     return (
-        <BaseTaskForm onSubmit={onSubmit} form={form}/>
+        <>
+            <h1 className="text-3xl mb-28">Create Subtask</h1>
+            <BaseTaskForm onSubmit={onSubmit} form={form}/>
+        </>
     )
 }

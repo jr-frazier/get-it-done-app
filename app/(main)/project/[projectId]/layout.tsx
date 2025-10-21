@@ -27,11 +27,12 @@ type Props = {
 
 
 export default async function MainLayout({children, params}: Props) {
+    const {projectId} = await params
     const {userId, redirectToSignIn} = await auth()
     if (!userId) return redirectToSignIn()
     const projects = await getProjects(userId)
-    const tasks = await getTasks(params.projectId)
-    const selectedProject = projects.find(project => project.id === params.projectId)
+    const tasks = await getTasks(projectId)
+    const selectedProject = projects.find(project => project.id === projectId)
 
     return (
         <SidebarProvider>

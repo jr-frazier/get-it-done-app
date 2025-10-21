@@ -17,7 +17,8 @@ export const getTasks = async (projectId: string): Promise<z.infer<typeof taskSc
         const tasks = await db
             .select()
             .from(taskTable)
-            .where(eq(taskTable.projectId, projectId));
+            .where(eq(taskTable.projectId, projectId))
+            .orderBy(taskTable.name, taskTable.id);
 
         // // Step 2: Fetch all subtasks that belong to those tasks
         const taskIds = tasks.map((t) => t.id);
@@ -57,7 +58,7 @@ export const getTask = async (taskId: string): Promise<z.infer<typeof taskRespon
     }
 }
 
-export const updateTask = async (taskId: string, data: z.infer<typeof taskFormSchema>): Promise<ApiResponse<z.infer<typeof taskFormSchema>>> => {
+export const updateTask = async (data: z.infer<typeof taskFormSchema>, taskId: string, projectId: string): Promise<ApiResponse<z.infer<typeof taskFormSchema>>> => {
     try {
         const {success, error} = taskFormSchema.safeParse(data);
         if (!success) {
@@ -68,16 +69,21 @@ export const updateTask = async (taskId: string, data: z.infer<typeof taskFormSc
     } catch (error) {
         console.error("Error updating task:", error);
         return {success: false, error: "Failed to update task"}
+    } finally {
+        revalidatePath(`project/${projectId}/${taskId}`)
+        redirect(`/project/${projectId}/${taskId}`)
     }
 }
 
-export const deleteTask = async (taskId: string): Promise<ApiResponse<void>> => {
+export const deleteTask = async (taskId: string, projectId: string): Promise<ApiResponse<void>> => {
     try {
         await db.delete(taskTable).where(eq(taskTable.id, taskId));
         return {success: true, data: undefined}
     } catch (error) {
         console.error("Error deleting task:", error);
         return {success: false, error: "Failed to delete task"}
+    } finally {
+        revalidatePath(`/project/${projectId}`)
     }
 }
 
@@ -132,8 +138,8 @@ export const addTask = async (unsafeData: z.infer<typeof taskFormSchema>, projec
         console.error("Error fetching tasks:", error);
         return {success: false, error: "Failed to fetch tasks"}
     } finally {
-      revalidatePath(`/dashboard/${projectId}`)
-      redirect(`/dashboard/${projectId}`)
+      revalidatePath(`/project/${projectId}`)
+      redirect(`/project/${projectId}`)
     }
 }
 

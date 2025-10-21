@@ -7,6 +7,7 @@ import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import {taskFormSchema} from "@/components/forms/task-forms/taskFormSchema";
 import {z} from "zod";
+import { useRouter } from "next/navigation"
 
 type TaskValueProps= z.infer<typeof taskFormSchema>
 
@@ -17,6 +18,10 @@ type BaseTaskFormProps = {
 }
 
 export default function BaseTaskForm({ onSubmit, form }: BaseTaskFormProps) {
+    const router = useRouter()
+    const handleCancel = () => {
+        router.back()
+    }
 
     return (
         <Form {...form}>
@@ -24,7 +29,13 @@ export default function BaseTaskForm({ onSubmit, form }: BaseTaskFormProps) {
                 <EmojiSelect/>
                 <NameField/>
                 <DescriptionField/>
-                <Button type="submit">Submit</Button>
+                <div className="flex gap-5">
+                    <Button type="submit">Submit</Button>
+                    <Button type="button" onClick={handleCancel}>
+                        Cancel
+                    </Button>
+                </div>
+
             </form>
         </Form>
     )

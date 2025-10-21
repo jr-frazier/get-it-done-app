@@ -27,6 +27,9 @@ export function NavTask({
 }: {
   tasks: z.infer<typeof taskSchema>[]
 }) {
+    if (tasks.length === 0) {
+        return <></>
+    }
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Tasks</SidebarGroupLabel>

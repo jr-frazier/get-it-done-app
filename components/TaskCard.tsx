@@ -6,7 +6,7 @@ import {Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle,} from 
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import CompletedIndicator from "@/components/CompletedIndicator";
-import {markTaskComplete, markTaskIncomplete} from "@/server/actions/tasks";
+import {deleteTask, markTaskComplete, markTaskIncomplete} from "@/server/actions/tasks";
 
 type TaskCardProps = {
     task: z.infer<typeof taskResponse>
@@ -30,6 +30,14 @@ export default function TaskCard({task, projectId}: TaskCardProps) {
         }
     }
 
+    const handleDelete = async () => {
+        try {
+            await deleteTask(task.id, projectId)
+        } catch (error) {
+            console.error('Failed to delete task:', error)
+        }
+    }
+
     return (
         <Card>
             <CardHeader>
@@ -38,17 +46,22 @@ export default function TaskCard({task, projectId}: TaskCardProps) {
                         {task.emoji} {task.name}
                     </Link>
                 </CardTitle>
-
             </CardHeader>
             <CardContent>
                 <p>{task.description}</p>
             </CardContent>
             <CardFooter>
-                <CardAction>
-                    {
-                        task.completed ? <Button variant="warningOutline" onClick={handleMarkIncomplete}>Mark Incomplete</Button> : <Button variant="successOutline" onClick={handleMarkComplete}>Mark Complete</Button>
-                    }
-                    {task.completed && <CompletedIndicator/>}
+                <CardAction className="flex justify-between gap-5 w-full">
+                    <div className="flex gap-5">
+                        {
+                            task.completed ? <Button variant="warningOutline" onClick={handleMarkIncomplete}>Mark Incomplete</Button> : <Button variant="successOutline" onClick={handleMarkComplete}>Mark Complete</Button>
+                        }
+                        {task.completed && <CompletedIndicator/>}
+                    </div>
+
+                    <Button variant="dangerOutline" onClick={handleDelete} >
+                        Delete
+                    </Button>
                 </CardAction>
             </CardFooter>
         </Card>

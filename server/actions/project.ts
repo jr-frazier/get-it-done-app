@@ -8,9 +8,10 @@ import {ProjectTable} from "@/drizzle/schema";
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
 import {ErrorResponse} from "@/server/types";
+import {eq} from "drizzle-orm";
 
 
-export const createProject = async (unsafeValues: z.infer<typeof projectSchema>): Promise<ErrorResponse | void> => {
+export const createProject = async (unsafeValues: z.infer<typeof projectSchema>): Promise<ErrorResponse | z.infer<typeof projectResponseSchema>> => {
     try {
         const {userId} = await auth();
 
@@ -24,16 +25,18 @@ export const createProject = async (unsafeValues: z.infer<typeof projectSchema>)
             return {error: "User not authenticated"}
         }
 
-        await db.insert(ProjectTable).values({...data, clerkUserId: userId})
+
+        const [project] = await db.insert(ProjectTable).values({...data, clerkUserId: userId}).returning();
+
+        return project;
+
     } catch (error) {
         console.error("Error creating project:", error);
         return {error: "Failed to create project"}
     } finally {
         revalidatePath("/dashboard")
         revalidatePath("/dashboard", "layout")
-        redirect("/dashboard")
     }
-
 }
 
 export const getProjects = async (clerkUserId: string): Promise<z.infer<typeof projectResponseSchema>[]> => {
@@ -56,8 +59,27 @@ export const getProjects = async (clerkUserId: string): Promise<z.infer<typeof p
 
 }
 
-// export const getProjects = async () => {
-//     await new Promise((resolve) => setTimeout(resolve, 50));
-//
-//     return {data: projectData}
-// }
+export const getProject = async (projectId: string): Promise<z.infer<typeof projectResponseSchema>> => {
+    try {
+        const [project] = await db.select().from(ProjectTable).where(eq(ProjectTable.id, projectId));
+        return project;
+    }
+   catch (error) {
+        console.error("Error fetching project:", error);
+        throw new Error("Failed to fetch project");
+    }
+}
+
+export const deleteProject = async (projectId: string): Promise<void> => {
+    try {
+        await db.delete(ProjectTable).where(eq(ProjectTable.id, projectId));
+    } catch (error) {
+        console.error("Error deleting project:", error);
+        throw new Error("Failed to delete project");
+    } finally {
+        revalidatePath("/dashboard")
+        revalidatePath("/dashboard", "layout")
+        redirect("/dashboard")
+    }
+}
+
